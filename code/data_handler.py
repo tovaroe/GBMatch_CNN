@@ -54,7 +54,7 @@ class DataHandler(object):
         self._WEIGHT_COL = None
         
         self.annotation = self.read_annotation(annotation_path)
-        (self.df_train, self.df_validation, self.df_test) = self.train_test_split()
+        (self.df_train, self.df_validation) = self.train_test_split()
         
         self._BATCH_SIZE = batch_size
         
@@ -133,8 +133,6 @@ class DataHandler(object):
             images, y = next(self.train_generator)
         elif gen=='val':
             images, y = next(self.val_generator)
-        elif gen=='test':
-            images, y = next(self.test_generator)
         
         for i in range(9):
             plt.subplot(3,3,i+1)
@@ -146,10 +144,8 @@ class DataHandler(object):
     def read_annotation(self, annotation_path):
         df = pd.read_csv(annotation_path, index_col=0)
         df.viable_ids = df.viable_ids.apply(lambda l: literal_eval(l)) 
-        df = df.loc[df.surgery==1]
-        df['surgery'] = df.surgery.astype(int)
         
-        drop_subset = ['patID', 'surgery', 'Age', 'Sex', 
+        drop_subset = ['patID', 'Age', 'Sex', 
                        'image_folder_name', 'viable_ids']
         if self._Y_COL == 'idx':
             drop_subset = drop_subset + ['followup_years', 'VitalStatus']
@@ -157,6 +153,17 @@ class DataHandler(object):
             drop_subset = drop_subset + ['Mesenchymal', 'Classical', 'Proneural']
         df.dropna(subset=drop_subset, inplace=True)
         
+        # set filenames     
+        df['filenames'] = df.patID.apply(lambda patID: [self._IMAGE_PATH + df.loc[df.patID==patID, 'image_folder_name'].item() + '/' + patID + '_histo_' + str(i) + '.' + self._IM_FORMAT for i in df.loc[df.patID==patID, 'viable_ids'].item()])
+                    
+        df.loc[:,'LTS_median'] = (df['followup_years'] > df['followup_years'].median()).astype(str)
+        df.loc[:,'LTS_3'] = (df['followup_years'] > 3).astype(str)
+        df.loc[(df['VitalStatus'] == 'alive') & (df['LTS_median'] == 'False'), 'LTS_median'] = np.nan
+        
+        df.reset_index(drop=True, inplace=True)
+        df['idx'] = df.index
+        
+        return df
 
     def train_test_split(self, val_size=0.2, random_state=74):
         df = self.annotation   
@@ -181,40 +188,10 @@ class DataHandler(object):
         
         
         df_validation = df.loc[validation_id,:].explode('filenames').rename({'filenames': 'filename'}, axis=1)
-        df_test = pd.DataFrame
         
         
-        return (df_train, df_validation, df_test)        
-        
-        # set filenames
-        def get_filenames(patID):
-            folder = df.loc[df.patID==patID, 'image_folder_name'].item()
-            filenames = []
-            folder_path = self._IMAGE_PATH + folder      
-        
-            
-            for _, _, files in os.walk(folder_path):
-                f = files[0]
-                if not self._IM_FORMAT in f: f = files[1]
-                if not self._IM_FORMAT in f: raise ValueError(f"Couldn't get filenames for {folder}")
-                filename_trunk = '_'.join(f.split(sep='.')[0].split('_')[:-1])  + '_'               
-            
-            for i in df.loc[df.patID==patID, 'viable_ids'].item():   
-                filenames.append(self._IMAGE_PATH + folder + '/' + filename_trunk + str(i) + '.' + self._IM_FORMAT)
-                
-            return filenames
-        
-        df['filenames'] = df.patID.apply(lambda patid: get_filenames(patid))
-                    
-        df.loc[:,'LTS_median'] = (df['followup_years'] > df['followup_years'].median()).astype(str)
-        df.loc[:,'LTS_3'] = (df['followup_years'] > 3).astype(str)
-        df.loc[(df['VitalStatus'] == 'alive') & (df['LTS_median'] == 'False'), 'LTS_median'] = np.nan
-        
-        df.reset_index(drop=True, inplace=True)
-        df['idx'] = df.index
-        
-        return df
-    
+        return (df_train, df_validation)        
+
             
     def get_nll_function(self):
         # works only when y_col is accordingly sorted index!
@@ -236,7 +213,7 @@ class DataHandler(object):
         
         assert self.evaluation_setup, 'Please run setup_evaluation_generator first.'
        
-        if not cohort in ['all', 'train', 'test', 'val']: raise ValueError('\'cohort\' must be one of [\'all\', \'train\', \'val\', \'test\'], got {}'.format(cohort))
+        if not cohort in ['all', 'train', 'val']: raise ValueError('\'cohort\' must be one of [\'all\', \'train\', \'val\'], got {}'.format(cohort))
        
         col_dict = {'idx': 'y_pred',
                     'Mesenchymal': 'Mesenchymal_pred',
@@ -338,7 +315,7 @@ class DataHandler(object):
             elif cohort=='val':
                 df = self.df_validation
             else:
-                raise ValueError("Cohort must be one of ['train', 'val', 'test'], got {}.".format(cohort))
+                raise ValueError("Cohort must be one of ['train', 'val'], got {}.".format(cohort))
                 
             assert 'y_pred' in df.columns, 'Please run predict_samples first.' 
                 

@@ -12,7 +12,7 @@ import sys
 from tensorflow import keras as k
 
 # Dependency - change to corret path before use!
-randaugment_path = r'D:\Users\Tom\Documents\GitHub\pathology-he-auto-augment\he-randaugment'
+randaugment_path =  r'..\..\pathology-he-auto-augment\he-randaugment' # r'D:\Users\Tom\Documents\GitHub\pathology-he-auto-augment\he-randaugment'
 sys.path.append(randaugment_path)
 
 # image variables
@@ -23,9 +23,9 @@ BASE_MODEL = 'Xception'
 IM_SIZE = 512 
 
 # path variables
-image_path = 'data/image_tiles/'
-annotation_path = 'data/GBMatch_annotation.csv'
-model_save_path = 'data/models/' + BASE_MODEL + '_' + MAGNIFICATION + '_' + str(IM_SIZE)
+image_path = '../data/image_tiles/'
+annotation_path = '../data/GBMatch_annotation.csv'
+model_save_path = '../data/models/' + BASE_MODEL + '_' + MAGNIFICATION + '_' + str(IM_SIZE)
 
 # data variables
 CLASS_MODE = 'raw'
@@ -35,10 +35,10 @@ BATCH_SIZE = 64
 # (pre-)processing variables
 WORKERS = 6 
 MAX_QUEUE_SIZE = 12    
-STEPS_PER_EPOCH = 150
-VALIDATION_ROUNDS = 20
-EPOCHS_1 = 25
-EPOCHS_2 = 10
+STEPS_PER_EPOCH = 5 # for manuscript: 150
+VALIDATION_ROUNDS = 2 # for manuscript: 20
+EPOCHS_1 = 2 # for manuscript: 25
+EPOCHS_2 = 2 # for manuscript: 10
 
 # DL variables    
 DROPOUT = 0.25

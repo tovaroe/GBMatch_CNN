@@ -13,7 +13,7 @@ from data_frame_iterator_pat import DataFrameIteratorPat
 class ImageDataGeneratorPat(ImageDataGenerator):
     def flow_from_dataframe(self,
                             dataframe,
-                            patid_col='id',
+                            patid_col='patID',
                             directory=None,
                             x_col="filename",
                             y_col="class",

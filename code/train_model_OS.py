@@ -85,7 +85,7 @@ def main():
                     break
             
             print("Loading model saved at: ", model_load_path,  " ...")
-            survmodel = SurvivalModel.load(model_load_path, config.target)
+            survmodel = SurvivalModel.load(model_load_path, target='OS')
             
     
         
