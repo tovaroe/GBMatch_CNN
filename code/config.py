@@ -12,7 +12,7 @@ import sys
 from tensorflow import keras as k
 
 # Dependency - change to corret path before use!
-randaugment_path =  r'..\..\pathology-he-auto-augment\he-randaugment' # r'D:\Users\Tom\Documents\GitHub\pathology-he-auto-augment\he-randaugment'
+randaugment_path =  r'..\..\pathology-he-auto-augment\he-randaugment' 
 sys.path.append(randaugment_path)
 
 # image variables
@@ -55,7 +55,7 @@ get_finetuning_optimizer = lambda lr: k.optimizers.Adam(learning_rate=k.optimize
                                                                                                    decay_steps=400,
                                                                                                    decay_rate=0.8,
                                                                                                    staircase=True))
-if BASE_MODEL == 'Xception':
-    LAYER_FINETUNING_START = 125
-    LAYER_FINETUNING_END = 123
-    LAYER_FINETUNING_STEP = -5
+# Finetuning variables
+LAYER_FINETUNING_START = 125
+LAYER_FINETUNING_END = 123
+LAYER_FINETUNING_STEP = -5
