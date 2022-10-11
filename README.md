@@ -24,6 +24,3 @@ The pipeline implemented here predicts transcriptional subtypes and survival of 
 If you wish to adopt this pipeline for your own use, please be sure to set the correct parameters in config.py.
 
 Moreover, we provide a fully trained model in gbm_predictor.py for predicting new samples.
-
-# Outlook
-There will be a trained version of both models which can be used to prospectively predict survival and transcriptional subtypes from whole slide scans available soon...
