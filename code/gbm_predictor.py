@@ -32,9 +32,9 @@ class GBMPredictor():
     def _load_StandardScaler(self):
         
         stds = StandardScaler()
-        stds.scale_ = 0.48140656
-        stds.mean_ = 0.07417872 
-        stds.var_ = 0.23175227
+        stds.scale_ =  0.53111313 #0.48140656
+        stds.mean_ = 0.38775175# 0.07417872 
+        stds.var_ = 0.28208116 #0.23175227
         return stds
         
     def predict(self, path, batch_size=64, annotation_handling = 'exclude'):
@@ -82,7 +82,7 @@ class GBMPredictor():
         
         # correctly scale results
         self.df['y_pred_scaled'] = self._StandardScaler.transform(self.df[['y_pred']]) 
-        self.df['high_risk'] = self.df['y_pred'] > 1
+        self.df['high_risk'] = self.df['y_pred_scaled'] > 1
         risk_group = 'High risk' if self.df.high_risk.mean() >= 0.25 else 'Low risk'
            
         # make heatmaps
@@ -121,12 +121,12 @@ class GBMPredictor():
         for i in self.df.index:
                 x = self.df.loc[i, 'x']
                 y = self.df.loc[i, 'y']
-                y_pred= self.df.loc[i, 'y_pred']
+                y_pred= self.df.loc[i, 'y_pred_scaled']
 
                 arr[x,y] = y_pred
 
         sns.heatmap(arr, xticklabels=False, yticklabels=False, square=True, cmap='icefire', vmin=-2, vmax=2)
-        plt.title('Median risk score: '+ str(np.round(self.df.y_pred.median(), 2)) + '\n' + risk_group + ' (' + str(np.round(self.df.high_risk.mean()*100,1)) + '% high risk tiles)')
+        plt.title('Median risk score: '+ str(np.round(self.df.y_pred_scaled.median(), 2)) + '\n' + risk_group + ' (' + str(np.round(self.df.high_risk.mean()*100,1)) + '% high risk tiles)')
         plt.savefig(output_path+'risk_heatmap.png', bbox_inches='tight')
         plt.close()
         
