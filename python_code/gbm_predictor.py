@@ -10,9 +10,7 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 import seaborn as sns
 import matplotlib.pyplot as plt
-
-import sys 
-sys.path.append(r'..\..\WSIHandler') # really I should just finally package this...
+from PIL import Image
 
 from wsi_handler import WSIHandler
 
@@ -36,6 +34,29 @@ class GBMPredictor():
         stds.mean_ = 0.38775175# 0.07417872 
         stds.var_ = 0.28208116 #0.23175227
         return stds
+        
+    def predict_single_image(self, path):
+        # Please be sure to use 20x magnification
+        im = Image.open(path)
+        
+        # Center crop to 512x512
+        width, height = im.size  
+        left = (width - 512)/2
+        top = (height - 512)/2
+        right = (width + 512)/2
+        bottom = (height + 512)/2
+        im = im.crop((left, top, right, bottom))
+        imarray = np.reshape( np.array(im), [-1, 512, 512, 3])
+        
+        ts_prediction = self.model_ts.model.predict(imarray)
+        mes_prediction = ts_prediction[0][0]
+        pro_prediction = ts_prediction[0][1]
+        cla_prediction = ts_prediction[0][2]
+        
+        risk_prediction = self.model_os.model.predict(imarray)[0][0]
+        
+        print(f"MES: {mes_prediction}\nPRO: {pro_prediction}\nCLA: {cla_prediction}\nRisk score: {risk_prediction}")
+        
         
     def predict(self, path, batch_size=64, annotation_handling = 'exclude'):
         output_path = path.split('.')[0] + '/'
@@ -107,7 +128,7 @@ class GBMPredictor():
             mean = str(np.round(self.df[ts].mean(), 2))
             
             ax = axs[j]
-            sns.heatmap(arr, xticklabels=False, yticklabels=False, square=True, vmin=0, vmax=1, cmap='icefire', ax=ax)
+            sns.heatmap(arr, xticklabels=False, yticklabels=False, square=True, vmin=0, vmax=1, ax=ax)
             ax.set_title('TS-Score: ' + ts.split('_')[0] + '\n(mean score ' + mean + ')')
             
         plt.suptitle('Predicted TS: ' + predicted_TS) 

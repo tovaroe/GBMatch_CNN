@@ -23,9 +23,9 @@ BASE_MODEL = 'Xception'
 IM_SIZE = 512 
 
 # path variables
-image_path = '../data/image_tiles/'
-annotation_path = '../data/GBMatch_annotation.csv'
-model_save_path = '../data/models/' + BASE_MODEL + '_' + MAGNIFICATION + '_' + str(IM_SIZE)
+image_path = '../data/training/image_tiles/'
+annotation_path = '../data/training/GBMatch_annotation.csv'
+model_save_path = '../data/training/models/' + BASE_MODEL + '_' + MAGNIFICATION + '_' + str(IM_SIZE)
 
 # data variables
 CLASS_MODE = 'raw'
