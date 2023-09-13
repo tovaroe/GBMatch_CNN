@@ -34,7 +34,7 @@ Heatmaps and detailed results will be automatically saved in a subfolder in your
 
 ## Training the CNN model
 1. Clone this repository and install the dependencies in your environment.
-2. Download all included image tiles at [zenodo repository TBD] and replace the data/training folder with the training folder from zenodo.
+2. Download all included image tiles at [zenodo repository TBD] and replace the data/training/image_tiles folder with the image_tiles folder from zenodo.
 3. Run train_model_OS.py and/or train_model_TS.py to reproduce the training with 5-fold cross validation. Models and results will be saved in the data/models folder.
 4. Run train_final_model_OS.py and/or train_final_model_TS.py to train the final model on the whole training dataset.
 
