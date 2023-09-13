@@ -47,8 +47,9 @@ Heatmaps and detailed results will be automatically saved in a subfolder in your
 ## Evaluation of the tumor microenvironment
 1. Install qupath 0.3.0 (newer versions should also work): https://qupath.github.io/.
 2. Download immunohistochemical slides from [TBD].
-3. Create a new project and import all immunohistochemical slides.
-4. Copy the CD34 and HLA-DR thresholder from GBMatch_CNN/qupath into your project.
-5. Run GBMatch_CNN/qupath/IHC_eval.groovy for all slides - results will be saved to a IHC_results-folder.
-6. Create a new project and import all HE image tiles.
-7. Run GBMatch_CNN/qupath/cellularity.groovy for all slides - results will be saved to a HE-results-folder.
+3. Download annotation (IHC_geojsons) from [TBD].
+4. Create a new project and import all immunohistochemical slides.
+5. Copy the CD34 and HLA-DR thresholder from GBMatch_CNN/qupath into your project.
+6. Run GBMatch_CNN/qupath/IHC_eval.groovy for all slides - results will be saved to a IHC_results-folder.
+7. Create a new project and import all HE image tiles.
+8. Run GBMatch_CNN/qupath/cellularity.groovy for all slides - results will be saved to a HE-results-folder.
