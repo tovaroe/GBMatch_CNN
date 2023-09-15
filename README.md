@@ -6,7 +6,7 @@ Predicting TS &amp; risk from glioblastoma whole slide images
 Upcoming paper: stay tuned...
 
 # Dependencies
-randaugment by Khrystyna Faryna: https://github.com/DIAGNijmegen/pathology-he-auto-augment
+randaugment by Khrystyna Faryna: [https://github.com/DIAGNijmegen/pathology-he-auto-augment](https://github.com/tovaroe/pathology-he-auto-augment)
 
 tensorflow 2.1.0
 
