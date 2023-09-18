@@ -18,8 +18,10 @@ import lifelines as ll
 from ast import literal_eval
 import os
 import config
+import sys
 
-
+randaugment_path =  r'..\..\pathology-he-auto-augment\he-randaugment' 
+sys.path.append(randaugment_path)
 from randaugment import distort_image_with_randaugment
 
 

@@ -10,7 +10,7 @@ import tensorflow as tf
 from tensorflow import keras as k
 tf.config.list_physical_devices()
 import os
-os.environ['CONDA_DLL_SEARCH_MODIFICATION_ENABLE'] = '1' # needed due to dll bug in my environment - might be unnecessary for other ppl
+#os.environ['CONDA_DLL_SEARCH_MODIFICATION_ENABLE'] = '1' # needed due to dll bug in my environment - might be unnecessary for other ppl
 import shutil
 import numpy as np
 from scipy.stats import mode
