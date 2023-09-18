@@ -8,7 +8,7 @@ Upcoming paper: stay tuned...
 # Dependencies
 python 3.7.7
 
-randaugment by Khrystyna Faryna: https://github.com/tovaroe/pathology-he-auto-augment (set correct path in config.py)
+randaugment by Khrystyna Faryna: https://github.com/tovaroe/pathology-he-auto-augment
 
 tensorflow 2.1.0
 
@@ -31,7 +31,7 @@ Heatmaps and detailed results will be automatically saved in a subfolder in your
 # Reproducing the manuscript results - step by step guide
 
 ## Training the CNN model
-1. Clone this repository and install the dependencies in your environment.
+1. Clone this repository and install the dependencies in your environment. Make sure that the path for randaugment is correctly set in the config.py (should be correct by default).
 2. Download all included image tiles at [zenodo repository TBD] and replace the data/training/image_tiles folder with the image_tiles folder from zenodo.
 3. Run train_model_OS.py and/or train_model_TS.py to reproduce the training with 5-fold cross validation. Models and results will be saved in the data/models folder.
 4. Run train_final_model_OS.py and/or train_final_model_TS.py to train the final model on the whole training dataset.
