@@ -8,7 +8,7 @@ Upcoming paper: stay tuned...
 # Dependencies
 python 3.7.7
 
-randaugment by Khrystyna Faryna: https://github.com/tovaroe/pathology-he-auto-augment
+randaugment by Khrystyna Faryna: https://github.com/tovaroe/pathology-he-auto-augment (set correct path in config.py)
 
 tensorflow 2.1.0
 
