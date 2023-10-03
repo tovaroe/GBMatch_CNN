@@ -32,7 +32,7 @@ Heatmaps and detailed results will be automatically saved in a subfolder in your
 
 ## Training the CNN model
 1. Clone this repository and install the dependencies in your environment. Make sure that the path for randaugment is correctly set in the config.py (should be correct by default).
-2. Download all included image tiles at [zenodo repository TBD] and replace the data/training/image_tiles folder with the image_tiles folder from zenodo.
+2. Download all included image tiles at https://doi.org/10.5281/zenodo.8358673 and replace the data/training/image_tiles folder with the image_tiles folder from zenodo.
 3. Run train_model_OS.py and/or train_model_TS.py to reproduce the training with 5-fold cross validation. Models and results will be saved in the data/models folder.
 4. Run train_final_model_OS.py and/or train_final_model_TS.py to train the final model on the whole training dataset.
 
@@ -44,10 +44,10 @@ Heatmaps and detailed results will be automatically saved in a subfolder in your
 
 ## Evaluation of the tumor microenvironment
 1. Install qupath 0.3.0 (newer versions should also work): https://qupath.github.io/.
-2. Download immunohistochemical slides from [TBD].
-3. Download annotation (IHC_geojsons) from [TBD].
-4. Create a new project and import all immunohistochemical slides.
+2. Download immunohistochemical slides from https://www.medical-epigenomics.org/papers/GBMatch/.
+3. Download annotation (IHC_geojsons) from https://doi.org/10.5281/zenodo.8358673.
+4. Create a new project and import all immunohistochemical slides & annotations.
 5. Copy the CD34 and HLA-DR thresholder from GBMatch_CNN/qupath into your project.
-6. Run GBMatch_CNN/qupath/IHC_eval.groovy for all slides - results will be saved to a IHC_results-folder.
+6. Run GBMatch_CNN/qupath/IHC_eval.groovy for all slides - immunohistochemistry results will be saved to a IHC_results-folder.
 7. Create a new project and import all HE image tiles.
-8. Run GBMatch_CNN/qupath/cellularity.groovy for all slides - results will be saved to a HE-results-folder.
+8. Run GBMatch_CNN/qupath/cellularity.groovy for all slides - cellularity results will be saved to a HE-results-folder.
