@@ -1,9 +1,14 @@
-# GBMatch_CNN
-Work in progress...
-Predicting TS &amp; risk from glioblastoma whole slide images
+# GBMatch_CNN - predicting transcriptional subtypes and risk from glioblastoma whole slide images
 
-# Reference
-Upcoming paper: stay tuned...
+# Description
+The pipeline implemented here predicts transcriptional subtypes and survival of glioblastoma patients based on H&E stained whole slide scans. Sample data is provided in this repository. To test the basic functionality with 5-fold-CV simply run train_model_OS.py (for survival) or train_model_TS.py (for transcriptional subtypes). Please note that this will not reproduce the results from the manuscript, as only a small fraction of the image data can be provided in this repository due to size constraints. In order to reproduce the results from the manuscript, please refer to the step by step guide below. The whole dataset can be accessed at https://www.medical-epigenomics.org/papers/GBMatch/.
+If you wish to adopt this pipeline for your own use, please be sure to set the correct parameters in config.py.
+
+Moreover, we provide a fully trained model in gbm_predictor.py for predicting new samples (supported WSI formats are ndpi and svs). To use GBMPredictor, simply initialize by calling 
+`gbm_predictor = GBMPredictor()`
+and predict your sample by calling
+`(predicted_TS, risk_group, median_riskscore) = gbm_predictor.predict(*path_to_slidescan*)`
+Heatmaps and detailed results will be automatically saved in a subfolder in your sample path.
 
 # Dependencies
 python 3.7.7
@@ -17,16 +22,6 @@ scikit-survival 0.13.1
 pandas 1.0.3
 
 lifelines 0.25.0
-
-# Description
-The pipeline implemented here predicts transcriptional subtypes and survival of glioblastoma patients based on H&E stained whole slide scans. Sample data is provided in this repository. To test the basic functionality with 5-fold-CV simply run train_model_OS.py (for survival) or train_model_TS.py (for transcriptional subtypes). Please note that this will not reproduce the results from the manuscript, as only a small fraction of the image data can be provided in this repository due to size constraints. In order to reproduce the results from the manuscript, please refer to the step by step guide below. The whole dataset can be accessed at https://www.medical-epigenomics.org/papers/GBMatch/.
-If you wish to adopt this pipeline for your own use, please be sure to set the correct parameters in config.py.
-
-Moreover, we provide a fully trained model in gbm_predictor.py for predicting new samples (supported WSI formats are ndpi and svs). To use GBMPredictor, simply initialize by calling 
-`gbm_predictor = GBMPredictor()`
-and predict your sample by calling
-`(predicted_TS, risk_group, median_riskscore) = gbm_predictor.predict(*path_to_slidescan*)`
-Heatmaps and detailed results will be automatically saved in a subfolder in your sample path.
 
 # Reproducing the manuscript results - step by step guide
 
@@ -51,3 +46,10 @@ Heatmaps and detailed results will be automatically saved in a subfolder in your
 6. Run GBMatch_CNN/qupath/IHC_eval.groovy for all slides - immunohistochemistry results will be saved to a IHC_results-folder.
 7. Create a new project and import all HE image tiles.
 8. Run GBMatch_CNN/qupath/cellularity.groovy for all slides - cellularity results will be saved to a HE-results-folder.
+
+# Reference
+Please consider citing our paper if you find any of the ressources helpful:
+
+Thomas Roetzer-Pejrimovsky, Karl-Heinz Nenning, Barbara Kiesel, Johanna Klughammer, Martin Rajchl, Bernhard Baumann, Georg Langs, Adelheid Woehrer, Deep learning links localized digital pathology phenotypes with transcriptional subtype and patient outcome in glioblastoma, GigaScience, Volume 13, 2024, giae057
+
+https://doi.org/10.1093/gigascience/giae057
